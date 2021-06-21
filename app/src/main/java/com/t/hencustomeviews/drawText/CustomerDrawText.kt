@@ -24,6 +24,24 @@ class CustomerDrawText(context: Context?, attrs: AttributeSet?) : View(context, 
 
     override fun onDraw(canvas: Canvas) {
         paint.textAlign = Paint.Align.CENTER
-        canvas.drawText("center text", width / 2f, height / 2f, paint)
+        canvas.drawText("center text", width / 2f, height / 2f + getBaseline(paint), paint)
+
+        paint.style = Paint.Style.STROKE
+        canvas.drawCircle(width / 2f, height / 2f, 40f, paint)
+        canvas.drawCircle(width / 2f, height / 2f, 100f, paint)
+    }
+
+
+    /**
+     * 计算绘制文字时的基线到中轴线的距离
+     *
+     * @param p
+     * @param centerY
+     * @return 基线和centerY的距离
+     */
+    private fun getBaseline(p: Paint): Float {
+        val fontMetrics: Paint.FontMetrics = p.fontMetrics
+//        return (fontMetrics.bottom - fontMetrics.top) / 2 - fontMetrics.descent
+        return (fontMetrics.descent - fontMetrics.ascent) / 2 - fontMetrics.descent
     }
 }
